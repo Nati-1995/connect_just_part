@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-scale, initial-scale=1.0">
+    <title>NT Bank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #141414;
+            color: white;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #FFD700;
+            font-weight: 700;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #000;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        /* Rotating Logo */
+        .navbar img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: rotateLogo 5s linear infinite;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 2px;
+        }
+
+        /* Dashboard */
+        .dashboard-container {
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .dashboard-container h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            animation: slideInFromLeft 1s ease-out;
+        }
+
+        .profile-section img {
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            margin-right: 20px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        .profile-section h3 {
+            font-size: 24px;
+            color: #FFD700;
+        }
+
+        .account-info {
+            background-color: #212121;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .account-info div {
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        .transactions-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .transactions-table th,
+        .transactions-table td {
+            padding: 15px;
+            font-size: 16px;
+            border-bottom: 1px solid #444;
+        }
+
+        .transactions-table th {
+            background-color: #333;
+            font-weight: 700;
+        }
+
+        .transactions-table tr:hover {
+            background-color: #444;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .transactions-table .negative {
+            color: red;
+            font-weight: bold;
+        }
+
+        .transactions-table .positive {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Funds Transfer Form */
+        .transfer-form {
+            background-color: #212121;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .transfer-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .transfer-form input:focus {
+            border-color: #FFD700;
+            background-color: #444;
+        }
+
+        .transfer-form button {
+            padding: 15px;
+            width: 100%;
+            border: none;
+            background-color: #FFD700;
+            color: black;
+            font-weight: 700;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .transfer-form button:hover {
+            background-color: #FFB800;
+            transform: scale(1.05);
+        }
+
+        /* Receipt Section */
+        .receipt {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+            position: relative;
+            max-width: 500px;
+            margin: 30px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .receipt h3 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .receipt p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .receipt .sender-receiver-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .receipt .sender-container {
+            margin-right: 20px;
+        }
+
+        .receipt .sender-receiver-container img,
+        .receipt .receiver-container img {
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .receipt .receiver-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            text-align: center;
+        }
+
+        .receipt .receiver-container p {
+            margin-top: 8px;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Rotate logo */
+        @keyframes rotateLogo {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <!-- Rotating Bank logo -->
+        <img src="initial-letter-nt-linked-logo-for-business-nt-logo-vector-37396623.jpg" alt="NT Bank Logo" />
+        <h1>NT Bank</h1>
+    </div>
+
+    <div class="dashboard-container" id="dashboard">
+        <h2>Welcome, <span id="accountHolderName">Nati Melkamu</span>!</h2>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nati's Profile Picture" id="profilePicture">
+            <h3 id="accountHolderName">Nati Melkamu</h3>
+        </div>
+
+        <!-- Account Info -->
+        <div class="account-info">
+            <div>Account Balance: <span id="accountBalance">$12,998.00</span></div>
+            <div>Account Type: <span id="accountType">Virtual</span></div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <h2>Recent Transactions</h2>
+        <table class="transactions-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount ($)</th>
+                </tr>
+            </thead>
+            <tbody id="transactionsList">
+                <!-- Previous Transactions -->
+                <tr>
+                    <td>2025-02-20</td>
+                    <td>Transferred to John Doe</td>
+                    <td class="negative">- $500.00</td>
+                </tr>
+                <tr>
+                    <td>2025-02-18</td>
+                    <td>Received from Sarah Lee</td>
+                    <td class="positive">+ $300.00</td>
+                </tr>
+                <tr>
+                    <td>2025-02-15</td>
+                    <td>Transferred to Mary Ann</td>
+                    <td class="negative">- $700.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Funds Transfer Form -->
+        <div class="transfer-form">
+            <h3>Transfer Funds</h3>
+            <input type="text" id="transferName" value="Nati Melkamu" disabled>
+            <input type="text" id="senderAddress" value="NT Bank, Abu Dhabi University, Abu Dhabi, UAE" disabled>
+            <input type="text" id="recipientName" placeholder="Recipient's Name" required>
+            <input type="text" id="recipientAddress" placeholder="Recipient's Address" required>
+            <input type="number" id="transferAmount" placeholder="Amount to Transfer" required>
+            <button onclick="processTransfer()">Transfer</button>
+        </div>
+
+        <!-- Transfer Receipt Section -->
+        <div class="receipt" id="receipt">
+            <h3>Transfer Receipt</h3>
+            <div class="sender-receiver-container">
+                <div class="sender-container">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sender's Profile">
+                    <p>Sender: <span id="receiptSenderName">Nati Melkamu</span></p>
+                    <p>Sender's Address: <span id="receiptSenderAddress">NT Bank, Abu Dhabi University, Abu Dhabi, UAE</span></p>
+                </div>
+                <div class="receiver-container">
+                    <img src="https://randomuser.me/api/portraits/men/48.jpg" alt="Receiver's Profile">
+                    <p>Receiver: <span id="receiptReceiverName">John Doe</span></p>
+                    <p>Receiver's Address: <span id="receiptReceiverAddress">UAE Central Bank, Dubai, UAE</span></p>
+                </div>
+            </div>
+            <p>Amount Transferred: <span id="receiptAmount">$500.00</span></p>
+            <p>Transaction Date: <span id="receiptDate">2025-02-20</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Fund Transfer Process
+        let accountBalance = 12998.00;
+
+        function processTransfer() {
+            const recipientName = document.getElementById('recipientName').value;
+            const recipientAddress = document.getElementById('recipientAddress').value;
+            const transferAmount = parseFloat(document.getElementById('transferAmount').value);
+
+            if (recipientName && recipientAddress && transferAmount > 0 && transferAmount <= accountBalance) {
+                accountBalance -= transferAmount;
+
+                // Update Account Balance
+                document.getElementById('accountBalance').textContent = `$${accountBalance.toFixed(2)}`;
+
+                // Add Transaction to the Table
+                const transactionsList = document.getElementById('transactionsList');
+                const newTransaction = document.createElement('tr');
+                newTransaction.innerHTML = `
+                    <td>${new Date().toISOString().split('T')[0]}</td>
+                    <td>Transferred to ${recipientName}</td>
+                    <td class="negative">- $${transferAmount.toFixed(2)}</td>
+                `;
+                transactionsList.appendChild(newTransaction);
+
+                // Show Transfer Receipt
+                document.getElementById('receiptSenderName').textContent = 'Nati Melkamu';
+                document.getElementById('receiptReceiverName').textContent = recipientName;
+                document.getElementById('receiptAmount').textContent = `$${transferAmount.toFixed(2)}`;
+                document.getElementById('receiptDate').textContent = new Date().toISOString().split('T')[0];
+                document.getElementById('receiptSenderAddress').textContent = 'NT Bank, Abu Dhabi University, Abu Dhabi, UAE';
+                document.getElementById('receiptReceiverAddress').textContent = recipientAddress;
+                document.getElementById('receipt').style.display = 'block';
+            } else {
+                alert("Invalid Transfer. Please check the recipient and amount.");
+            }
+        }
+    </script>
+</body>
+
+</html>
